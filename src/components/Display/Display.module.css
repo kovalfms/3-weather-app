@@ -1,0 +1,27 @@
+.paperLeft {
+    display: flex;
+    width: 400px;
+    margin: 20px;
+    height: 500px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+.paperRight {
+    display: flex;
+    width: 880px;
+    margin: 20px;
+    height: 560px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.list {
+    width: 100%;
+    max-width: 260px;
+    color: #fff;
+}
