@@ -18,6 +18,7 @@ const CityChip = () => {
             {chipData.map((data) => {
                 return (
                     <Chip
+                        key={data.key}
                         label={data.label}
                         color="success"
                         onDelete={data.label === 'React' ? undefined : handleDelete(data)}
