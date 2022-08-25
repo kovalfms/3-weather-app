@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import {AppBar, Box, Button, TextField, Toolbar} from "@mui/material";
 import {LocationOnOutlined, SearchOutlined} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {fetchByCity, fetchDataByLocation} from "../redux/slices/weatherSlice";
-import {fetchForecastByCity, fetchForecastByLocation} from "../redux/slices/forecastSlice";
+import {fetchByCity, fetchDataByLocation} from "../../redux/slices/weatherSlice";
+import {fetchForecastByCity, fetchForecastByLocation} from "../../redux/slices/forecastSlice";
+import classes from './Navbar.module.css';
 
 
 const Navbar = () => {
@@ -24,22 +25,17 @@ const Navbar = () => {
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
-                <Toolbar sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    bgcolor: "#11505f"
-                }}>
+                <Toolbar sx={{}} className={classes.toolbar}>
                     <TextField
                         value={city}
                         onChange={e => setCity(e.target.value)}
                         variant="outlined"
                         size="small"
                         sx={{width: "300px"}}/>
-                    <Button onClick={getWeatherByCity} variant="outlined" size="large">
+                    <Button onClick={getWeatherByCity} variant="text"  size="large">
                         <SearchOutlined sx={{color: "salmon"}}/>
                     </Button>
-                    <Button sx={{marginLeft: "20px"}} onClick={getWeatherByLocation} variant="outlined" size="large">
+                    <Button sx={{marginLeft: "20px", color: "white"}} onClick={getWeatherByLocation} variant="outlined" size="large">
                         <LocationOnOutlined sx={{color: "salmon"}}/>
                         GET LOCATION WEATHER
                     </Button>

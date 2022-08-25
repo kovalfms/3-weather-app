@@ -25,3 +25,46 @@
     max-width: 260px;
     color: #fff;
 }
+
+.wrap {
+    max-width: 1400px;
+    margin: 20px auto 5px;
+    padding: 20px;
+    min-height: 550px;
+    flex-grow: 1;
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+    .paperRight {
+        display: flex;
+        width: 500px;
+        margin: 20px;
+        max-height: 560px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .wrap {
+        margin: 20px auto 5px;
+        padding: 20px;
+        min-height: 550px;
+        flex-grow: 1;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width: 768px) {
+    .scrollup {
+        margin-right: 80px;
+    }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 480px) {
+    .scrollup {
+        margin-right: 20px;
+        bottom: 90px;
+    }
+}

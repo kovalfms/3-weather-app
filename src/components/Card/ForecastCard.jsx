@@ -13,12 +13,11 @@ const ForecastCard = ({data}) => {
         <Grid>
             <Paper elevation={3} className={classes.paper} sx={{bgcolor: '#f1f1f114'}}>
                 <Box margin="5px" flex textAlign="center" justifyContent="center">
-                    {/*<img src="http://openweathermap.org/img/w/01d.png" alt="icon"/>*/}
-                    <Typography variant="title" component="h2" color="#000000">{day}</Typography>
-                    <Typography variant="title" component="h2" color="#000000">{date}</Typography>
+                    <Typography variant="h6" color="#000000">{day}</Typography>
+                    <Typography variant="h6" color="#000000">{date}</Typography>
                 </Box>
                 <Grid item sx={{display: "flex", flexDirection:"row", justifyContent:'space-between', alignItems:"center", width:"120px"}}>
-                    <Box >
+                    <Box>
                         <Typography variant="h5" fontSize="20px" color="salmon">
                             {data.temp.max.toFixed(0)}/{data.temp.min.toFixed(0)}°C
                         </Typography>
@@ -26,7 +25,7 @@ const ForecastCard = ({data}) => {
                     <Box><img src={` http://openweathermap.org/img/wn/${data.weather[0].icon}.png`} alt="icon"/></Box>
                 </Grid>
 
-                <List sx={{bgcolor: '#f1f1f114'}} className={classes.list}>
+                <List sx={{bgcolor: '#f1f1f114', padding: 0}} className={classes.list}>
                     <ListItem sx={{padding: 0 }}>
                         <WindPower/>
                         <ListItemText  sx={{textAlign:"center"}}>{data.wind_speed} m/s</ListItemText>

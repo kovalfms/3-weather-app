@@ -1,0 +1,6 @@
+.toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #11505f
+}
