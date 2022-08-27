@@ -35,7 +35,7 @@ const Navbar = () => {
                     <Button onClick={getWeatherByCity} variant="text"  size="large">
                         <SearchOutlined sx={{color: "salmon"}}/>
                     </Button>
-                    <Button sx={{marginLeft: "20px", color: "white"}} onClick={getWeatherByLocation} variant="outlined" size="large">
+                    <Button sx={{marginLeft: "20px", color: "white"}}  onClick={getWeatherByLocation} variant="outlined" size='medium'>
                         <LocationOnOutlined sx={{color: "salmon"}}/>
                         GET LOCATION WEATHER
                     </Button>

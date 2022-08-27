@@ -4,7 +4,7 @@ import {API_KEY} from "../../helpers/API";
 import {baseStorage} from "../../helpers/baseStorage";
 
 const initialState = {
-    weatherData: baseStorage.getItem('weather') || {},
+    weatherData: baseStorage.getItem('weather') || '',
     status: null
 }
 

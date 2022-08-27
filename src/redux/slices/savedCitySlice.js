@@ -52,7 +52,7 @@ const savedCitySlice = createSlice({
         deleteSavedCity(state, action) {
             state.cities = state.cities.filter(city => city.id !== action.payload.id)
             baseStorage.setItem('saved_cities', state.cities)
-            console.log('from delete')
+
         }
     }
 })

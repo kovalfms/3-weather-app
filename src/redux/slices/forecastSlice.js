@@ -4,7 +4,7 @@ import {API_KEY} from "../../helpers/API";
 import {baseStorage} from "../../helpers/baseStorage";
 
 const initialState = {
-    forecastData: [],
+    forecastData: baseStorage.getItem('forecast'),
     status: null
 }
 

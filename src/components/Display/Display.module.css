@@ -1,3 +1,17 @@
+.wrap {
+    display: flex;
+    flex-direction: row;
+    max-width: 1400px;
+    margin: 20px auto 5px;
+    padding: 20px;
+    min-height: 550px;
+    flex-grow: 1;
+}
+
+.container {
+    height: 100%;
+}
+
 .paperLeft {
     display: flex;
     width: 400px;
@@ -9,15 +23,24 @@
     border-radius: 20px;
 }
 
+.weatherMain {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .paperRight {
     display: flex;
-    width: 880px;
+    width: 100%;
+    max-width: 880px;
     margin: 20px;
     height: 660px;
     align-items: center;
     justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
+    overflow: auto;
 }
 
 .list {
@@ -26,45 +49,55 @@
     color: #fff;
 }
 
-.wrap {
-    max-width: 1400px;
-    margin: 20px auto 5px;
-    padding: 20px;
-    min-height: 550px;
-    flex-grow: 1;
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (max-width: 992px) {
-    .paperRight {
-        display: flex;
-        width: 500px;
-        margin: 20px;
-        max-height: 560px;
+@media only screen and (max-width: 1250px) {
+    .container {
         align-items: center;
-        justify-content: center;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
+        justify-content: center;
     }
-    .wrap {
-        margin: 20px auto 5px;
-        padding: 20px;
-        min-height: 550px;
-        flex-grow: 1;
+
+    .paperRight {
+        width: 100%;
+        margin: 10px;
+        max-height: 560px;
+    }
+
+    .paperLeft {
+        width: 400px;
+        height: 400px;
+    }
+
+    .list {
+        height: 200px;
+    }
+
+    .divider {
+        display: none;
+    }
+
+}
+
+@media only screen and (max-width: 1040px) {
+    .paperLeft {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        margin: 10px;
     }
 }
 
-/* Small Devices, Tablets */
+
 @media only screen and (max-width: 768px) {
-    .scrollup {
-        margin-right: 80px;
+
+    .paperRight {
+        max-height: 400px;
     }
+
 }
 
-/* Extra Small Devices, Phones */
 @media only screen and (max-width: 480px) {
-    .scrollup {
-        margin-right: 20px;
-        bottom: 90px;
+    .paperLeft {
+        flex-direction: column;
     }
 }

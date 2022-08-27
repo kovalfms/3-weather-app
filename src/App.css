@@ -1,3 +1,21 @@
 body {
-    background-image: url('https://www.survivingwithandroid.com/wp-content/uploads/2014/11/android_weather_app.jpg');
+    background: url('https://www.survivingwithandroid.com/wp-content/uploads/2014/11/android_weather_app.jpg') fixed;
+    background-size: cover;
+    transition: all 5s ease-in;
+    animation: animBg 30s linear infinite;
+}
+
+@keyframes animBg {
+    0%,
+    32% {
+        background-image: url('https://www.survivingwithandroid.com/wp-content/uploads/2014/11/android_weather_app.jpg');
+    }
+    33%,
+    66% {
+        background-image: url('https://img1.akspic.ru/crops/3/7/7/1/4/141773/141773-dozhd-groza-atmosfera-pogoda-dnevnoe_vremya-3840x2160.jpg');
+    }
+    67%,
+    100% {
+        background-image: url('https://img2.akspic.ru/crops/4/7/8/6/46874/46874-burya-upravlenie-prognozirovanie_pogody-senokosnoye_ugodye-pogoda-3840x2160.jpg');
+    }
 }

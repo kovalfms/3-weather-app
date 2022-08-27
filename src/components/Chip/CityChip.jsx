@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Badge, Box, Button, Chip, ClickAwayListener, Grid, Paper, Stack} from "@mui/material";
+import {Badge, Button, Chip, ClickAwayListener, Grid, Paper, Stack} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteSavedCity, fetchForecastForSavedCity, fetchWeatherForSavedCity} from "../../redux/slices/savedCitySlice";
 import {PushPinOutlined} from "@mui/icons-material";
@@ -57,9 +57,10 @@ const CityChip = () => {
                             flexWrap="wrap"
                             alignItems="center"
                             maxWidth="400px"
-                            maxHeight="300px"
-                            justifyContent="space-between"
+                            maxHeight="150px"
+                            justifyContent="space-around"
                             position="absolute"
+                            overflow="auto"
                         > {cities.map((data) => {
                             return (
                                 <Chip
