@@ -80,23 +80,6 @@ const CityChip = () => {
             </Grid>
         </ClickAwayListener>
     );
-
-
-    // <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
-    //     {cities.map((data) => {
-    //         return (
-    //             <Chip
-    //                 key={data.id}
-    //                 label={data.name}
-    //                 color="success"
-    //                 onDelete={handleDelete(data.id)}
-    //                 clickable
-    //                 onClick={() => handleClick(data)}
-    //             />
-    //         );
-    //     })}
-    // </Stack>
-    // );
 };
 
 export default CityChip;

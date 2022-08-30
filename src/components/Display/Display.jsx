@@ -8,21 +8,33 @@ import {Opacity, ThermostatAuto, Visibility, WindPower} from "@mui/icons-materia
 import CityChip from "../Chip/CityChip";
 import ForecastCard from "../Card/ForecastCard";
 
-import {fetchDataByLocation} from "../../redux/slices/weatherSlice";
 import {useDispatch, useSelector} from "react-redux";
+
+import {
+    deleteSavedCity,
+    fetchForecastFromSavedCity,
+    fetchWeatherFromSavedCity,
+    saveCity
+} from "../../redux/slices/savedCitySlice";
 import {fetchForecastByLocation} from "../../redux/slices/forecastSlice";
-import {saveCity} from "../../redux/slices/savedCitySlice";
+import {fetchDataByLocation} from "../../redux/slices/weatherSlice";
 
 
 const Display = () => {
     const {weatherData: data, status} = useSelector(state => state.weather)
+    const {cities} = useSelector(state => state.savedCity)
     const {forecastData} = useSelector(state => state.forecast)
+
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchDataByLocation())
-        dispatch(fetchForecastByLocation())
+        if (navigator.geolocation) {
+            dispatch(fetchForecastByLocation())
+            dispatch(fetchDataByLocation())
+        }
+        dispatch(fetchWeatherFromSavedCity())
+        dispatch(fetchForecastFromSavedCity())
     }, [dispatch])
 
     const handleSave = () => {
@@ -35,17 +47,16 @@ const Display = () => {
         dispatch(saveCity(saveData))
     }
 
+    const handleDelete = (name) => {
+        dispatch(deleteSavedCity(name))
+    }
+
     return (
         status === 'loading'
             ? <Typography variant="h2" component="h2" textAlign="center">LOADING</Typography>
             : <Box className={classes.wrap}>
-                {data.length <= 0
-                    ? <>
-                        <Typography variant="h2" component="h2"> &#128543; Choose town or get location weather!</Typography>
-                        <Box marginTop="20px">
-                            <CityChip/>
-                        </Box>
-                    </>
+                {!data
+                    ? <Typography variant="h2" component="h2"> &#128543; Choose town or get location weather!</Typography>
                     : <Grid container spacing={1} className={classes.container}>
                         <Grid item xl={4} lg={4} md={6} sm={12}>
                             <Paper elevation={3} sx={{bgcolor: "#f1f1f114"}} className={classes.paperLeft}>
@@ -60,15 +71,28 @@ const Display = () => {
                                             justifyContent: "space-between"
                                         }}>
                                         <Typography variant="h5" component="h2" color="#ffff">{data.name}</Typography>
-                                        <Button
-                                            sx={{fontSize: "14px"}}
-                                            variant="outlined"
-                                            color="warning"
-                                            onClick={handleSave}
-                                            size="small"
-                                        >
-                                            Save
-                                        </Button>
+
+                                        {!cities.find(city => city.name === data.name)
+                                            ? < Button
+                                                sx={{fontSize: "14px"}}
+                                                variant="outlined"
+                                                color="warning"
+                                                onClick={handleSave}
+                                                size="small"
+                                            >
+                                                Save
+                                            </Button>
+                                            : <Button
+                                                sx={{fontSize: "14px"}}
+                                                variant="outlined"
+                                                color="warning"
+                                                onClick={() => handleDelete(cities.find(city => city.name === data.name))}
+                                                size="small"
+                                            >
+                                                Delete
+                                            </Button>
+                                        }
+
                                     </Grid>
                                     <Box className={classes.weatherMain}>
                                         <Typography

@@ -1,10 +1,9 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 import {API_KEY} from "../../helpers/API";
-import {baseStorage} from "../../helpers/baseStorage";
 
 const initialState = {
-    forecastData: baseStorage.getItem('forecast'),
+    forecastData: [],
     status: null
 }
 
@@ -14,9 +13,8 @@ export const fetchForecastByLocation = createAsyncThunk(
         const success = async (position) => {
             try {
                 const {latitude, longitude} = position.coords
-                const {data} = await axios.get(`/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
-                baseStorage.setItem('forecast', data.daily)
-                return dispatch(setForecast(data.daily))
+                const response = await axios.get(`/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
+                return dispatch(setForecast(response.data.daily))
             } catch (e) {
                 return rejectWithValue(e.message)
             }
@@ -24,7 +22,7 @@ export const fetchForecastByLocation = createAsyncThunk(
         const error = (e) => {
             console.warn(`ERROR(${e.code}): ${e.message}`);
         }
-        navigator.geolocation.getCurrentPosition(success, error);
+        navigator.geolocation.getCurrentPosition(success, error)
     }
 )
 
@@ -35,7 +33,6 @@ export const fetchForecastByCity = createAsyncThunk(
             const {data} = await axios.get(`/weather?q=${city}&appid=${API_KEY}`);
             const {lon, lat} = data.coord
             const response = await axios.get(`/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
-            baseStorage.setItem('forecast', response.data.daily)
             return dispatch(setForecast(response.data.daily))
 
         }catch (e) {

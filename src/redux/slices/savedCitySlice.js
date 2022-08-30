@@ -15,8 +15,21 @@ export const fetchWeatherForSavedCity = createAsyncThunk(
         try {
             const {lat, lon} = data
             const response = await axios.get(`/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`);
-            baseStorage.setItem('weather', response.data)
             return dispatch(setWeather(response.data))
+        } catch (e) {
+            return rejectWithValue(e.message)
+        }
+    }
+)
+export const fetchWeatherFromSavedCity = createAsyncThunk(
+    'savedWeather/fetchWeatherForSavedCity',
+    async (_, {rejectWithValue, dispatch}) => {
+        if (initialState.cities.length === 0) return dispatch(setWeather(''))
+        try {
+            const {lat, lon} = initialState.cities[0]
+            const {data} = await axios.get(`/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`);
+            return dispatch(setWeather(data))
+
         } catch (e) {
             return rejectWithValue(e.message)
         }
@@ -29,8 +42,21 @@ export const fetchForecastForSavedCity = createAsyncThunk(
         try {
             const {lat, lon} = data
             const response = await axios.get(`/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
-            baseStorage.setItem('forecast', response.data.daily)
             return dispatch(setForecast(response.data.daily))
+        } catch (e) {
+            return rejectWithValue(e.message)
+        }
+    }
+)
+
+export const fetchForecastFromSavedCity = createAsyncThunk(
+    'savedWeather/fetchWeatherForSavedCity',
+    async (_, {rejectWithValue, dispatch}) => {
+        if (initialState.cities.length === 0) return dispatch(setForecast([]))
+        try {
+            const {lat, lon} = initialState.cities[0]
+            const {data} = await axios.get(`/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
+            return dispatch(setForecast(data.daily))
         } catch (e) {
             return rejectWithValue(e.message)
         }
@@ -43,7 +69,7 @@ const savedCitySlice = createSlice({
     initialState,
     reducers: {
         saveCity(state, action) {
-            if (!state.cities.find(city => city.name === action.payload.name)){
+            if (!state.cities.find(city => city.name === action.payload.name)) {
                 state.cities.push(action.payload)
             }
             baseStorage.setItem('saved_cities', state.cities)
