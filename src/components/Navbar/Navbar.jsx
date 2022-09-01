@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
+import {useDispatch} from "react-redux";
+
 import {AppBar, Box, Button, TextField, Toolbar} from "@mui/material";
 import {LocationOnOutlined, SearchOutlined} from "@mui/icons-material";
-import {useDispatch} from "react-redux";
+
 import {fetchByCity, fetchDataByLocation} from "../../redux/slices/weatherSlice";
 import {fetchForecastByCity, fetchForecastByLocation} from "../../redux/slices/forecastSlice";
+
 import classes from './Navbar.module.css';
 
 

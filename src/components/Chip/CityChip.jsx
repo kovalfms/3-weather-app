@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {Badge, Button, Chip, ClickAwayListener, Grid, Paper, Stack} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
+
+import {Badge, Button, Chip, ClickAwayListener, Grid, Paper, Stack} from "@mui/material";
 import {deleteSavedCity, fetchForecastForSavedCity, fetchWeatherForSavedCity} from "../../redux/slices/savedCitySlice";
 import {PushPinOutlined} from "@mui/icons-material";
 

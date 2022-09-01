@@ -1,9 +1,12 @@
 import React from 'react';
-import classes from './ForecastCard.module.css';
 
 import {Box, Grid, List, ListItem, ListItemText, Paper, Typography} from "@mui/material";
 import {Opacity, ThermostatAuto, Visibility, WindPower} from "@mui/icons-material";
+
 import {dateFormat} from "../../helpers/dateFormat";
+
+import classes from './ForecastCard.module.css';
+
 
 const ForecastCard = ({data}) => {
 

@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import classes from './Display.module.css';
 import {v4 as uniqueId} from 'uuid';
 
-import {Box, Button, Divider, Grid, List, ListItem, ListItemText, Paper, Typography} from "@mui/material";
-import {Opacity, ThermostatAuto, Visibility, WindPower} from "@mui/icons-material";
-
-import CityChip from "../Chip/CityChip";
-import ForecastCard from "../Card/ForecastCard";
-
 import {useDispatch, useSelector} from "react-redux";
+import {Box, Button, Divider, Grid, List, ListItem, ListItemText, Paper, Typography} from "@mui/material";
+
+import {Opacity, ThermostatAuto, Visibility, WindPower} from "@mui/icons-material";
+import CityChip from "../Chip/CityChip";
+
+import ForecastCard from "../Card/ForecastCard";
 
 import {
     deleteSavedCity,
@@ -32,9 +32,11 @@ const Display = () => {
         if (navigator.geolocation) {
             dispatch(fetchForecastByLocation())
             dispatch(fetchDataByLocation())
+        } else {
+            dispatch(fetchWeatherFromSavedCity())
+            dispatch(fetchForecastFromSavedCity())
         }
-        dispatch(fetchWeatherFromSavedCity())
-        dispatch(fetchForecastFromSavedCity())
+
     }, [dispatch])
 
     const handleSave = () => {
