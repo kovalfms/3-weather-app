@@ -1,19 +1,18 @@
 import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
+import {AppBar, Box, Button, TextField, Toolbar} from '@mui/material';
+import {LocationOnOutlined, SearchOutlined} from '@mui/icons-material';
 
-import {AppBar, Box, Button, TextField, Toolbar} from "@mui/material";
-import {LocationOnOutlined, SearchOutlined} from "@mui/icons-material";
-
-import {fetchByCity, fetchDataByLocation} from "../../redux/slices/weatherSlice";
-import {fetchForecastByCity, fetchForecastByLocation} from "../../redux/slices/forecastSlice";
+import {fetchByCity, fetchDataByLocation} from '../../redux/slices/weatherSlice';
+import {fetchForecastByCity, fetchForecastByLocation} from '../../redux/slices/forecastSlice';
+import {useAppDispatch} from '../../hooks';
 
 import classes from './Navbar.module.css';
 
 
-const Navbar = () => {
-    const [city, setCity] = useState('')
+const Navbar: React.FC = () => {
+    const [city, setCity] = useState<string>('')
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const getWeatherByCity = () => {
         dispatch(fetchByCity(city))
@@ -34,12 +33,12 @@ const Navbar = () => {
                         onChange={e => setCity(e.target.value)}
                         variant="outlined"
                         size="small"
-                        sx={{width: "300px"}}/>
+                        sx={{width: '300px'}}/>
                     <Button onClick={getWeatherByCity} variant="text"  size="large">
-                        <SearchOutlined sx={{color: "salmon"}}/>
+                        <SearchOutlined sx={{color: 'salmon'}}/>
                     </Button>
-                    <Button sx={{marginLeft: "20px", color: "white"}}  onClick={getWeatherByLocation} variant="outlined" size='medium'>
-                        <LocationOnOutlined sx={{color: "salmon"}}/>
+                    <Button sx={{marginLeft: '20px', color: 'white'}}  onClick={getWeatherByLocation} variant="outlined" size="medium">
+                        <LocationOnOutlined sx={{color: 'salmon'}}/>
                         GET LOCATION WEATHER
                     </Button>
                 </Toolbar>

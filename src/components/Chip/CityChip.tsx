@@ -1,22 +1,29 @@
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
 
-import {Badge, Button, Chip, ClickAwayListener, Grid, Paper, Stack} from "@mui/material";
-import {deleteSavedCity, fetchForecastForSavedCity, fetchWeatherForSavedCity} from "../../redux/slices/savedCitySlice";
-import {PushPinOutlined} from "@mui/icons-material";
+import {Badge, Button, Chip, ClickAwayListener, Grid, Paper, Stack} from '@mui/material';
+import {PushPinOutlined} from '@mui/icons-material';
 
-const CityChip = () => {
-    const [open, setOpen] = useState(false);
+import {
+    deleteSavedCity,
+    fetchForecastForSavedCity,
+    fetchWeatherForSavedCity
+} from '../../redux/slices/savedCitySlice';
+import {City} from '../../redux/types';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 
 
-    const {cities} = useSelector(state => state.savedCity)
-    const dispatch = useDispatch()
+const CityChip: React.FC = () => {
+    const [open, setOpen] = useState<boolean>(false);
 
-    const handleDelete = (id) => () => {
-        dispatch(deleteSavedCity({id}))
+
+    const {cities} = useAppSelector(state => state.savedCity)
+    const dispatch = useAppDispatch()
+
+    const handleDelete = (id: string) => () => {
+        dispatch(deleteSavedCity(id))
     };
 
-    const handleClick = (data) => {
+    const handleClick = (data: City) => {
         dispatch(fetchWeatherForSavedCity(data))
         dispatch(fetchForecastForSavedCity(data))
     }
@@ -32,7 +39,7 @@ const CityChip = () => {
         <ClickAwayListener onClickAway={handleClickAway}>
             <Grid
                 container
-                flex
+                display="flex"
                 justifyContent="center"
                 alignItems="flex-start"
                 direction="column"
@@ -46,14 +53,14 @@ const CityChip = () => {
                         onClick={handleClickOpen}
                         sx={{color: 'white'}}
                     >
-                        <PushPinOutlined sx={{color: "salmon"}}/>
+                        <PushPinOutlined sx={{color: 'salmon'}}/>
                         saved cities
                     </Button>
                 </Badge>
                 {open &&
                     <Paper>
                         <Stack
-                            flex
+                            display="flex"
                             direction="row"
                             flexWrap="wrap"
                             alignItems="center"
@@ -63,18 +70,18 @@ const CityChip = () => {
                             position="absolute"
                             overflow="auto"
                         > {cities.map((data) => {
-                            return (
-                                <Chip
-                                    sx={{marginTop: "12px"}}
-                                    key={data.id}
-                                    label={data.name}
-                                    color="success"
-                                    onDelete={handleDelete(data.id)}
-                                    clickable
-                                    onClick={() => handleClick(data)}
-                                />
-                            );
-                        })}
+                                return (
+                                    <Chip
+                                        sx={{marginTop: '12px'}}
+                                        key={data.id}
+                                        label={data.name}
+                                        color="success"
+                                        onDelete={handleDelete(data.id)}
+                                        clickable
+                                        onClick={() => handleClick(data)}
+                                    />
+                                );
+                            })}
                         </Stack>
                     </Paper>
                 }
