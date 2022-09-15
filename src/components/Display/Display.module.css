@@ -12,6 +12,12 @@
     height: 100%;
 }
 
+.skeleton {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
 .paperLeft {
     display: flex;
     width: 400px;

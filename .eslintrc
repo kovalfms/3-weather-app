@@ -1,4 +1,22 @@
 {
+  //  "parser": "@typescript-eslint/parser",
+  //  "plugins": ["import"],
+  //  "settings": {
+  //    "import/parsers": {
+  //      "@typescript-eslint/parser": [
+  //        ".ts", ".tsx"
+  //      ]
+  //    },
+  //    "import/resolver": {
+  //      "typescript": {
+  //        "alwaysTryTypes": true
+  //      }
+  //    }
+  //  },
+  //  "parserOptions": {
+  //    "project": "./tsconfig.json",
+  //    "tsconfigRootDir": "./"
+  //  },
   "extends": [
     "react-app",
     "react-app/jest"
@@ -31,5 +49,11 @@
         "newlines-between": "always-and-inside-groups"
       }
     ]
+  },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"]
+    }
   }
 }

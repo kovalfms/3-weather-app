@@ -19,9 +19,9 @@ export const fetchForecastByLocation = createAsyncThunk<object, undefined, { rej
     async (_, {rejectWithValue, dispatch}) => {
         const success = async (position: { coords: { latitude: number; longitude: number; }; }) => {
             const {latitude, longitude} = position.coords
-            const response = await axios.get(`/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
-            if(response){
-                return dispatch(setForecast(response.data.daily))
+            const {data} = await axios.get(`/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
+            if(data){
+                return dispatch(setForecast(data.daily))
             }
             return rejectWithValue('fetch forecast by location error')
         }
@@ -61,9 +61,7 @@ const forecastSlice = createSlice({
             .addCase(fetchForecastByLocation.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(fetchForecastByLocation.fulfilled, (state, action) => {
-                // @ts-ignore
-                state.forecastData = action.payload
+            .addCase(fetchForecastByLocation.fulfilled, (state) => {
                 state.status = 'success'
             })
             .addCase(fetchForecastByLocation.rejected, (state) => {

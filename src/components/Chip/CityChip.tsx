@@ -12,14 +12,14 @@ import {City} from '../../redux/types';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 
 
-const CityChip: React.FC = () => {
+export const CityChip: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
 
 
     const {cities} = useAppSelector(state => state.savedCity)
     const dispatch = useAppDispatch()
 
-    const handleDelete = (id: string) => () => {
+    const handleDelete = (id: string) => {
         dispatch(deleteSavedCity(id))
     };
 
@@ -76,7 +76,7 @@ const CityChip: React.FC = () => {
                                         key={data.id}
                                         label={data.name}
                                         color="success"
-                                        onDelete={handleDelete(data.id)}
+                                        onDelete={() => handleDelete(data.id)}
                                         clickable
                                         onClick={() => handleClick(data)}
                                     />
@@ -89,5 +89,3 @@ const CityChip: React.FC = () => {
         </ClickAwayListener>
     );
 };
-
-export default CityChip;

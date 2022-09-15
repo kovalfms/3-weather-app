@@ -6,8 +6,8 @@ import {Weather} from '../types';
 
 
 type WeatherState = {
-    weatherData: Weather,
-    status: string | null
+    weatherData?: Weather,
+    status?: string
 }
 
 const initialState: WeatherState = {
@@ -29,8 +29,8 @@ const initialState: WeatherState = {
             lon: 0,
             lat: 0
         }
-    } || {},
-    status: null
+    },
+    status: ''
 }
 
 
@@ -51,7 +51,6 @@ export const fetchDataByLocation = createAsyncThunk<object, undefined, {rejectVa
 
         }
         navigator.geolocation.getCurrentPosition(success, error)
-
     }
 )
 
@@ -72,8 +71,8 @@ const weatherSlice = createSlice({
     name: 'weather',
     initialState,
     reducers: {
-        setWeather(state, action: PayloadAction<Weather>) {
-            state.weatherData = action.payload
+        setWeather(state, action: PayloadAction<Weather | undefined>) {
+            state.weatherData = action?.payload
         }
     },
     extraReducers: (builder) => {
@@ -90,9 +89,7 @@ const weatherSlice = createSlice({
             .addCase(fetchDataByLocation.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(fetchDataByLocation.fulfilled, (state,action) => {
-                // @ts-ignore
-                state.weatherData = action.payload
+            .addCase(fetchDataByLocation.fulfilled, (state) => {
                 state.status = 'success'
             })
             .addCase(fetchDataByLocation.rejected, (state) => {

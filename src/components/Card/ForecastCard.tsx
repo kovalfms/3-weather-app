@@ -11,7 +11,7 @@ interface ForecastCardProps {
     data: Forecast
 }
 
-const ForecastCard: React.FC<ForecastCardProps> = ({data}) => {
+export const ForecastCard: React.FC<ForecastCardProps> = ({data}) => {
 
     const {date, day} = dateFormat(data.dt)
 
@@ -53,5 +53,3 @@ const ForecastCard: React.FC<ForecastCardProps> = ({data}) => {
         </Grid>
     );
 };
-
-export default ForecastCard;

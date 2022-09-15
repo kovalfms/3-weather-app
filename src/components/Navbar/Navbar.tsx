@@ -9,7 +9,7 @@ import {useAppDispatch} from '../../hooks';
 import classes from './Navbar.module.css';
 
 
-const Navbar: React.FC = () => {
+export const Navbar: React.FC = () => {
     const [city, setCity] = useState<string>('')
 
     const dispatch = useAppDispatch()
@@ -46,5 +46,3 @@ const Navbar: React.FC = () => {
         </Box>
     );
 };
-
-export default Navbar;
