@@ -1,9 +1,10 @@
 import axios from 'axios';
+
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import {API_KEY} from '../../helpers/API';
-import {baseStorage} from '../../helpers/baseStorage';
-import {City} from '../types';
+import {API_KEY} from '@helpers/API';
+import {baseStorage} from '@helpers/baseStorage';
+import {City} from '@redux/types';
 
 import {setWeather} from './weatherSlice';
 import {setForecast} from './forecastSlice';
@@ -72,7 +73,6 @@ export const fetchForecastFromSavedCity = createAsyncThunk<object, undefined, { 
     }
 )
 
-
 const savedCitySlice = createSlice({
     name: 'savedCity',
     initialState,
@@ -87,7 +87,6 @@ const savedCitySlice = createSlice({
         deleteSavedCity(state, action: PayloadAction<string>) {
             state.cities = state.cities.filter(city => city.id !== action.payload)
             baseStorage.setItem('saved_cities', state.cities)
-
         }
     }
 })

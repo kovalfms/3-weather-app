@@ -2,8 +2,8 @@ import React from 'react';
 import {Box, Grid, List, ListItem, ListItemText, Paper, Typography} from '@mui/material';
 import {Opacity, ThermostatAuto, Visibility, WindPower} from '@mui/icons-material';
 
-import {Forecast} from '../../redux/types';
-import {dateFormat} from '../../helpers/dateFormat';
+import {Forecast} from '@redux/types';
+import {dateFormat} from '@helpers/dateFormat';
 
 import classes from './ForecastCard.module.css';
 

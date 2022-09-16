@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {AppBar, Box, Button, TextField, Toolbar} from '@mui/material';
+import {AppBar, Box, Button, TextField, Toolbar, Typography} from '@mui/material';
 import {LocationOnOutlined, SearchOutlined} from '@mui/icons-material';
 
-import {fetchByCity, fetchDataByLocation} from '../../redux/slices/weatherSlice';
-import {fetchForecastByCity, fetchForecastByLocation} from '../../redux/slices/forecastSlice';
-import {useAppDispatch} from '../../hooks';
+import {fetchByCity, fetchDataByLocation} from '@redux/slices/weatherSlice';
+import {fetchForecastByCity, fetchForecastByLocation} from '@redux/slices/forecastSlice';
+import {useAppDispatch} from '@helpers/hooks';
 
 import classes from './Navbar.module.css';
 
@@ -37,9 +37,9 @@ export const Navbar: React.FC = () => {
                     <Button onClick={getWeatherByCity} variant="text"  size="large">
                         <SearchOutlined sx={{color: 'salmon'}}/>
                     </Button>
-                    <Button sx={{marginLeft: '20px', color: 'white'}}  onClick={getWeatherByLocation} variant="outlined" size="medium">
+                    <Button className={classes.geoBtn}  onClick={getWeatherByLocation} variant="outlined" size="medium">
                         <LocationOnOutlined sx={{color: 'salmon'}}/>
-                        GET LOCATION WEATHER
+                        <Typography className={classes.geoBtnText}>GET LOCATION WEATHER</Typography>
                     </Button>
                 </Toolbar>
             </AppBar>

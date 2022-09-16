@@ -7,9 +7,9 @@ import {
     deleteSavedCity,
     fetchForecastForSavedCity,
     fetchWeatherForSavedCity
-} from '../../redux/slices/savedCitySlice';
-import {City} from '../../redux/types';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+} from '@redux/slices/savedCitySlice';
+import {City} from '@redux/types';
+import {useAppDispatch, useAppSelector} from '@helpers/hooks';
 
 
 export const CityChip: React.FC = () => {

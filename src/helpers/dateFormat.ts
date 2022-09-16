@@ -1,6 +1,6 @@
-export const dateFormat = (dt) => {
+export const dateFormat = (dt: string): FormatDate => {
 
-    const milliseconds = dt * 1000;
+    const milliseconds = parseInt(dt) * 1000;
 
     const myDate = new Date(milliseconds);
 
@@ -9,4 +9,9 @@ export const dateFormat = (dt) => {
     const day = myDate.toLocaleString('en-US', { weekday: 'long' });
 
     return { date, day };
+}
+
+type FormatDate = {
+    date: string,
+    day: string,
 }

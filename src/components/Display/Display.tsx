@@ -14,19 +14,18 @@ import {
 } from '@mui/material';
 import {Opacity, ThermostatAuto, Visibility, WindPower} from '@mui/icons-material';
 
-import {CityChip} from '../Chip';
-
-import {ForecastCard} from '../Card';
+import {CityChip} from '@components/Chip';
+import {ForecastCard} from '@components/Card';
 import {
     deleteSavedCity,
     fetchForecastFromSavedCity,
     fetchWeatherFromSavedCity,
     saveCity
-} from '../../redux/slices/savedCitySlice';
-import {fetchForecastByLocation} from '../../redux/slices/forecastSlice';
-import {fetchDataByLocation} from '../../redux/slices/weatherSlice';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {City} from '../../redux/types';
+} from '@redux/slices/savedCitySlice';
+import {fetchForecastByLocation} from '@redux/slices/forecastSlice';
+import {fetchDataByLocation} from '@redux/slices/weatherSlice';
+import {useAppDispatch, useAppSelector} from '@helpers/hooks';
+import {City} from '@redux/types';
 
 import classes from './Display.module.css';
 
@@ -67,9 +66,8 @@ export const Display: React.FC = () => {
 
     return (
         status === 'loading'
-            ? <Box sx={{textAlign: 'center', width: '100%'}}>
+            ? <Box sx={{width: '100%'}}>
                 <LinearProgress/>
-                <Typography variant="h2" component="h2">LOADING</Typography>
             </Box>
             : <Box className={classes.wrap}>
                 {!data

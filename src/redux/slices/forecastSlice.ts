@@ -1,8 +1,8 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import {API_KEY} from '../../helpers/API';
-import {Forecast} from '../types';
+import {API_KEY} from '@helpers/API';
+import {Forecast} from '@redux/types';
 
 type ForecastData = {
     forecastData: Forecast[],

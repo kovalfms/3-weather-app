@@ -4,3 +4,17 @@
     align-items: center;
     background-color: #11505f
 }
+
+.geoBtn {
+    margin-left: 20px;
+    color: white;
+}
+.geoBtnText{
+    color: white;
+}
+
+@media only screen and (max-width: 480px) {
+    .geoBtnText{
+        display: none;
+    }
+}
