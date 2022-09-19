@@ -1,6 +1,5 @@
-import axios from 'axios';
-
 import {createAsyncThunk} from '@reduxjs/toolkit';
+import axios from 'axios';
 
 import {API_KEY} from '@helpers/API';
 import {setWeather} from '@redux/slices/weatherSlice';
