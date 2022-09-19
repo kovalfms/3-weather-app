@@ -16,16 +16,14 @@ import {Opacity, ThermostatAuto, Visibility, WindPower} from '@mui/icons-materia
 
 import {CityChip} from '@components/Chip';
 import {ForecastCard} from '@components/Card';
-import {
-    deleteSavedCity,
-    fetchForecastFromSavedCity,
-    fetchWeatherFromSavedCity,
-    saveCity
-} from '@redux/slices/savedCitySlice';
-import {fetchForecastByLocation} from '@redux/slices/forecastSlice';
-import {fetchDataByLocation} from '@redux/slices/weatherSlice';
+import {deleteSavedCity, saveCity} from '@redux/slices/savedCitySlice';
+
 import {useAppDispatch, useAppSelector} from '@helpers/hooks';
 import {City} from '@redux/types';
+
+import {fetchForecastFromSavedCity, fetchWeatherFromSavedCity} from '@redux/AsynkThunks/savedCities';
+import {fetchForecastByLocation} from '@redux/AsynkThunks/forecast';
+import {fetchDataByLocation} from '@redux/AsynkThunks/weather';
 
 import classes from './Display.module.css';
 
@@ -40,10 +38,10 @@ export const Display: React.FC = () => {
     const findCity = cities.find(city => city.name === data?.name)
 
     useEffect(() => {
-        if ('geolocation' in navigator) {
+        if (navigator.geolocation) {
             dispatch(fetchForecastByLocation())
             dispatch(fetchDataByLocation())
-        }else {
+        } else {
             dispatch(fetchWeatherFromSavedCity())
             dispatch(fetchForecastFromSavedCity())
         }

@@ -3,11 +3,8 @@ import React, {useState} from 'react';
 import {Badge, Button, Chip, ClickAwayListener, Grid, Paper, Stack} from '@mui/material';
 import {PushPinOutlined} from '@mui/icons-material';
 
-import {
-    deleteSavedCity,
-    fetchForecastForSavedCity,
-    fetchWeatherForSavedCity
-} from '@redux/slices/savedCitySlice';
+import {deleteSavedCity} from '@redux/slices/savedCitySlice';
+import {fetchForecastForSavedCity, fetchWeatherForSavedCity} from '@redux/AsynkThunks/savedCities';
 import {City} from '@redux/types';
 import {useAppDispatch, useAppSelector} from '@helpers/hooks';
 
