@@ -18,7 +18,7 @@ import {CityChip} from '@components/Chip';
 import {ForecastCard} from '@components/Card';
 import {deleteSavedCity, saveCity} from '@redux/slices/savedCitySlice';
 
-import {useAppDispatch, useAppSelector} from '@helpers/hooks';
+import {useAppDispatch, useCity, useForecast, useWeather} from '@helpers/hooks';
 import {City} from '@redux/types';
 
 import {fetchForecastFromSavedCity, fetchWeatherFromSavedCity} from '@redux/AsynkThunks/savedCities';
@@ -29,23 +29,22 @@ import classes from './Display.module.css';
 
 
 export const Display: React.FC = () => {
-    const {weatherData: data, status} = useAppSelector(state => state.weather)
-    const {cities} = useAppSelector(state => state.savedCity)
-    const {forecastData} = useAppSelector(state => state.forecast)
-
+    const {weatherData: data, status, errorCode} = useWeather()
+    const {cities} = useCity()
+    const {forecastData} = useForecast()
     const dispatch = useAppDispatch()
 
     const findCity = cities.find(city => city.name === data?.name)
 
     useEffect(() => {
-        if (navigator.geolocation) {
+        if (errorCode !== 1) {
             dispatch(fetchForecastByLocation())
             dispatch(fetchDataByLocation())
         } else {
             dispatch(fetchWeatherFromSavedCity())
             dispatch(fetchForecastFromSavedCity())
         }
-    }, [dispatch])
+    }, [errorCode, dispatch])
 
     const handleSave = () => {
         if (!data) return
@@ -83,10 +82,9 @@ export const Display: React.FC = () => {
                                             alignItems: 'center',
                                             justifyContent: 'space-between'
                                         }}>
-                                        <Typography variant="h5" component="h2" color="#ffff">{data.name}</Typography>
-
+                                        <Typography variant="h5" color="#ffff">{data.name}</Typography>
                                         {!findCity
-                                            ? < Button
+                                            ? <Button
                                                 sx={{fontSize: '14px'}}
                                                 variant="outlined"
                                                 color="warning"

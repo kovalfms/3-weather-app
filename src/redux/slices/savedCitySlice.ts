@@ -1,19 +1,17 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import {baseStorage} from '@helpers/baseStorage';
 import {City} from '@redux/types';
 
 
-type SavedCityState = {
+export type SavedCityState = {
     cities: City[],
     status?: string
 }
 
-export const initialState: SavedCityState = {
-    cities: baseStorage.getItem('saved_cities') || [],
+const initialState: SavedCityState = {
+    cities:[],
     status: ''
 }
-
 
 const savedCitySlice = createSlice({
     name: 'savedCity',
@@ -23,12 +21,12 @@ const savedCitySlice = createSlice({
             if (!state.cities.find(city => city.name === action.payload.name)) {
                 state.cities.push(action.payload)
             }
-            baseStorage.setItem('saved_cities', state.cities)
+            // baseStorage.setItem('saved_cities', state.cities)
         },
 
         deleteSavedCity(state, action: PayloadAction<string>) {
             state.cities = state.cities.filter(city => city.id !== action.payload)
-            baseStorage.setItem('saved_cities', state.cities)
+            // baseStorage.setItem('saved_cities', state.cities)
         }
     }
 })

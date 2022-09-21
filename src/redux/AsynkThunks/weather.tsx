@@ -1,33 +1,34 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
 
-import {API_KEY} from '@helpers/API';
-import {setWeather} from '@redux/slices/weatherSlice';
+import {getWhetherByCity, getWhetherByLocation} from '@helpers/API';
+import {setErrorCode, setWeather} from '@redux/slices/weatherSlice';
+import {CitiesList} from '@redux/types';
 
 export const fetchDataByLocation = createAsyncThunk<object, undefined, {rejectValue : string}>(
     'weather/fetchDataByLocation',
     async (_, {rejectWithValue, dispatch}) => {
         const success = async (position: GeolocationPosition) => {
             const {latitude, longitude} = position.coords
-            const {data} = await axios.get(`/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`)
+            const {data} = await getWhetherByLocation(latitude, longitude)
             if(data){
                 return dispatch(setWeather(data))
             }
             return rejectWithValue('fetch weather by location is error')
         }
         const error = (e: { code: number; message: string; }) => {
+            dispatch(setErrorCode(e.code))
             // eslint-disable-next-line no-console
             console.warn(`ERROR(${e.code}): ${e.message}`);
-
         }
         navigator.geolocation.getCurrentPosition(success, error)
     }
 )
 
-export const fetchByCity = createAsyncThunk<object, string, { rejectValue: string }>(
+export const fetchByCity = createAsyncThunk<object, CitiesList, { rejectValue: string }>(
     'weather/fetchByCity',
     async (city, {rejectWithValue, dispatch}) => {
-        const {data} = await axios.get(`/weather?q=${city}&units=metric&appid=${API_KEY}`)
+        const {lat, lng} = city
+        const {data} = await getWhetherByCity(lat, lng)
         if (data) {
             return dispatch(setWeather(data))
         } else {

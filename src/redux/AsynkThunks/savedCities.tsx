@@ -1,17 +1,16 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
 
-import {API_KEY} from '@helpers/API';
+import {getForecastSavedCity, getWeatherSavedCity} from '@helpers/API';
 import {City} from '@redux/types';
 import {setWeather} from '@redux/slices/weatherSlice';
 import {setForecast} from '@redux/slices/forecastSlice';
-import {initialState} from '@redux/slices/savedCitySlice';
+
 
 export const fetchWeatherForSavedCity = createAsyncThunk<object, City, { rejectValue: string }>(
     'savedWeather/fetchWeatherForSavedCity',
     async (data, {rejectWithValue, dispatch}) => {
         const {lat, lon} = data
-        const response = await axios.get(`/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`);
+        const response = await getWeatherSavedCity(lat, lon)
         if (response) {
             return dispatch(setWeather(response.data))
         }
@@ -19,14 +18,14 @@ export const fetchWeatherForSavedCity = createAsyncThunk<object, City, { rejectV
         return rejectWithValue('fetch weather for saved city error')
     }
 )
+
 export const fetchWeatherFromSavedCity = createAsyncThunk<object, undefined, { rejectValue: string }>(
     'savedWeather/fetchWeatherForSavedCity',
-    async (_, {rejectWithValue, dispatch}) => {
-        if (initialState.cities.length === 0) {
-            return dispatch(setWeather(undefined))
-        }
-        const {lat, lon} = initialState.cities[0]
-        const {data} = await axios.get(`/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`);
+    async (_, {rejectWithValue, dispatch, getState}) => {
+        const {savedCity}: any = getState()
+        if (savedCity.cities.length === 0) return
+        const {lat, lon} = savedCity.cities[0]
+        const {data} = await getWeatherSavedCity(lat, lon)
         if (data) {
             return dispatch(setWeather(data))
         }
@@ -39,7 +38,7 @@ export const fetchForecastForSavedCity = createAsyncThunk<object, City, { reject
     'savedWeather/fetchWeatherForSavedCity',
     async (data, {rejectWithValue, dispatch}) => {
         const {lat, lon} = data
-        const response = await axios.get(`/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
+        const response = await getForecastSavedCity(lat, lon)
         if (response) {
             return dispatch(setForecast(response.data.daily))
         }
@@ -50,12 +49,13 @@ export const fetchForecastForSavedCity = createAsyncThunk<object, City, { reject
 
 export const fetchForecastFromSavedCity = createAsyncThunk<object, undefined, { rejectValue: string }>(
     'savedWeather/fetchWeatherForSavedCity',
-    async (_, {rejectWithValue, dispatch}) => {
-        if (initialState.cities.length === 0) return dispatch(setForecast([]))
-        const {lat, lon} = initialState.cities[0]
-        const response = await axios.get(`/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
-        if (response) {
-            return dispatch(setForecast(response.data.daily))
+    async (_, {rejectWithValue, dispatch, getState}) => {
+        const {savedCity}: any = getState()
+        if (savedCity.cities.length === 0) return
+        const {lat, lon} = savedCity.cities[0]
+        const {data} = await getForecastSavedCity(lat, lon)
+        if (data) {
+            return dispatch(setForecast(data.daily))
         }
         return rejectWithValue('fetch forecast from saved city error')
     }

@@ -38,3 +38,10 @@ export type City = {
     lon: number,
     lat: number,
 }
+
+export type CitiesList = {
+    name: string,
+    country: string,
+    lat: string,
+    lng: string
+}

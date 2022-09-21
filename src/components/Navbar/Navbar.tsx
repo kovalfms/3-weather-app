@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import {debounce} from 'lodash';
+
 import {AppBar, Autocomplete, Box, Button, TextField, Toolbar, Typography} from '@mui/material';
 import {LocationOnOutlined} from '@mui/icons-material';
 
@@ -6,15 +8,9 @@ import {useAppDispatch} from '@helpers/hooks';
 import {citiesList} from '@helpers/cities';
 import {fetchByCity, fetchDataByLocation} from '@redux/AsynkThunks/weather';
 import {fetchForecastByCity, fetchForecastByLocation} from '@redux/AsynkThunks/forecast';
+import {CitiesList} from '@redux/types';
 
 import classes from './Navbar.module.css';
-
-export type CitiesList = {
-    name: string,
-    country: string,
-    lat: string,
-    lng: string
-}
 
 
 export const Navbar: React.FC = () => {
@@ -24,16 +20,20 @@ export const Navbar: React.FC = () => {
 
     const city = citiesList.filter(city => city.name.toLowerCase().includes(value.toLowerCase()));
 
-    useEffect(()=> {
+    useEffect(() => {
         setSearchCities(city.slice(0, 10));
-    },[value]);
+    }, [value]);
 
     const getWeatherByCity = (city: CitiesList | null) => {
-        if(city){
-            dispatch(fetchByCity(city.name))
-            dispatch(fetchForecastByCity(city.name))
+        if (city) {
+            dispatch(fetchByCity(city))
+            dispatch(fetchForecastByCity(city))
         }
     }
+
+    const searchCity = (e: { target: { value: React.SetStateAction<string> } }) => setValue(e.target.value)
+
+    const debounceHandler = debounce(searchCity, 500)
 
     const getWeatherByLocation = () => {
         dispatch(fetchDataByLocation())
@@ -48,13 +48,17 @@ export const Navbar: React.FC = () => {
                         size="small"
                         options={searchCities}
                         onChange={(e, val) => getWeatherByCity(val)}
-                        getOptionLabel={(option: CitiesList) => `${option.name}`}
+                        getOptionLabel={(option: CitiesList) => `${option.name} ${option.country}`}
+                        // isOptionEqualToValue={(option, value) => option.lat === value.lat}
+                        renderOption={(props, option) => (
+                            <li {...props} key={option.lat}>{option.name} {option.country}</li>
+                        )}
                         renderInput={(params) =>
                             <TextField
                                 {...params}
                                 autoFocus
                                 variant="outlined"
-                                onChange={e => setValue(e.target.value)}
+                                onChange={debounceHandler}
                                 sx={{width: '300px'}}/>
                         }
                     />

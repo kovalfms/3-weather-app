@@ -1,11 +1,12 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 import {Weather} from '@redux/types';
-import {fetchByCity, fetchDataByLocation} from "@redux/AsynkThunks/weather";
+import {fetchByCity, fetchDataByLocation} from '@redux/AsynkThunks/weather';
 
 
 type WeatherState = {
     weatherData?: Weather,
+    errorCode: number | undefined,
     status?: string
 }
 
@@ -29,6 +30,7 @@ const initialState: WeatherState = {
             lat: 0
         }
     },
+    errorCode: undefined,
     status: ''
 }
 
@@ -37,7 +39,10 @@ const weatherSlice = createSlice({
     initialState,
     reducers: {
         setWeather(state, action: PayloadAction<Weather | undefined>) {
-            state.weatherData = action?.payload
+            state.weatherData = action.payload
+        },
+        setErrorCode(state, action) {
+            state.errorCode = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -64,5 +69,5 @@ const weatherSlice = createSlice({
 
 })
 
-export const {setWeather} = weatherSlice.actions
+export const {setWeather, setErrorCode} = weatherSlice.actions
 export default weatherSlice.reducer

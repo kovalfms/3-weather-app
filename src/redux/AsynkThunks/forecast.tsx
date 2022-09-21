@@ -1,16 +1,16 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
 
-import {API_KEY} from '@helpers/API';
+import {getForecastByCity, getForecastByLocation} from '@helpers/API';
 import {setForecast} from '@redux/slices/forecastSlice';
+import {CitiesList} from '@redux/types'
 
 export const fetchForecastByLocation = createAsyncThunk<object, undefined, { rejectValue: string }>(
     'forecastfetchForecastByLocation',
     async (_, {rejectWithValue, dispatch}) => {
-        const success = async (position: { coords: { latitude: number; longitude: number; }; }) => {
+        const success = async (position: GeolocationPosition) => {
             const {latitude, longitude} = position.coords
-            const {data} = await axios.get(`/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
-            if(data){
+            const {data} = await getForecastByLocation(latitude, longitude)
+            if (data) {
                 return dispatch(setForecast(data.daily))
             }
             return rejectWithValue('fetch forecast by location error')
@@ -23,13 +23,12 @@ export const fetchForecastByLocation = createAsyncThunk<object, undefined, { rej
     }
 )
 
-export const fetchForecastByCity = createAsyncThunk<object, string, { rejectValue: string }>(
+export const fetchForecastByCity = createAsyncThunk<object, CitiesList, { rejectValue: string }>(
     'forecast/fetchForecastByCity',
     async (city, {rejectWithValue, dispatch}) => {
-        const {data} = await axios.get(`/weather?q=${city}&appid=${API_KEY}`);
-        if (data) {
-            const {lon, lat} = data.coord
-            const response = await axios.get(`/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
+        const {lat, lng} = city
+        const response = await getForecastByCity(lat, lng);
+        if (response) {
             return dispatch(setForecast(response.data.daily))
         }
         return rejectWithValue('fetch forecast by city error')
